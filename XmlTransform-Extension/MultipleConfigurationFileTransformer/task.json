@@ -1,10 +1,10 @@
 {
   "id": "c7237c10-23f5-11e6-8551-db7351d42238",
-  "name": "MultipleConfigurationFileTransformer",
+  "name": "Multiple Configuration File Transformer",
   "friendlyName": "Tranform multiple configuration files",
   "description": "Transform multiple configuration files listed in web/app.config",
   "author": "Mikael Krief",
-  "helpMarkDown": "version 0.1.0",
+  "helpMarkDown": "version 0.1.9",
   "category": "Utility",
   "visibility": [
     "Build",
@@ -14,31 +14,23 @@
   "version": {
     "Major": "0",
     "Minor": "1",
-    "Patch": "0"
+    "Patch": "9"
   },
   "minimumAgentVersion": "1.95.0",
-  "instanceNameFormat": "MultipleConfigFileTransform $(message)",
-  
-  "groups":[
-    {
-    "name":"PathOption",   
-    "displayName" :"Paths",
-    "isExpanded" : "true"    
-    }
-  ],
+  "instanceNameFormat": "Multiple Config File Transform $(message)",
   "inputs": [
     {
       "name": "webConfigRelativePath",
       "type": "filePath",
-      "label": "Web or App config file path",
+      "label": "Web/App config file path",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Web/App.config file path"
+      "helpMarkDown": "Web or App.config file path"
     },
     {
       "name": "outPutRelativePath",
       "type": "string",
-      "label": "Output Path for transformed configuration(s) file(s)",
+      "label": "Transformed Output Path",
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Relative Output Path for transformed configuration(s) file(s) Example : $(build.BinariesDirectory)\\MyApp\\Configuration\\"

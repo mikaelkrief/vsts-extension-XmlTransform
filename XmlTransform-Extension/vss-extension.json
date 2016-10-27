@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "ConfigurationFileTransformer",
-  "version": "0.1.0",
+  "version": "0.1.10",
   "name": "Configuration Files Transformer",
   "scopes": [],
   "description": "Transforme XML Configurations and files",

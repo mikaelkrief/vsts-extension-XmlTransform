@@ -7,30 +7,21 @@ param
 )
 
 
-Trace-VstsEnteringInvocation $MyInvocation
+
 try{
 
     . "$PSScriptRoot\Helpers.ps1"
 
     # These variables are provided by TFS
-    $buildAgentHomeDirectory = $env:AGENT_HOMEDIRECTORY
-    $buildSourcesDirectory = $Env:BUILD_SOURCESDIRECTORY
-    $buildStagingDirectory = $Env:BUILD_STAGINGDIRECTORY
-    $buildPlatform = $Env:BUILDPLATFORM
+
     $buildConfiguration = $Env:BUILDCONFIGURATION
-        
-    Write-Verbose "- TFS Variables -"
-    Write-Verbose "buildAgentHomeDirectory :" $buildAgentHomeDirectory
-    Write-Verbose "buildSourcesDirectory :" $buildSourcesDirectory
-    Write-Verbose "buildStagingDirectory :" $buildStagingDirectory
-    Write-Verbose "buildPlatform :" $buildPlatform
-    Write-Verbose "buildConfiguration :" $buildConfiguration
     
     Write-Host "Inputs are the following : "
     $webConfig = $webConfigRelativePath
     $configurationType = $buildConfiguration
     $outputPath = $outPutRelativePath
-    Write-Host "`n - WebConfig : "$WebConfig"`n - ConfigurationType : "$ConfigurationType"`n - outputPath : "$outputPath"`n"
+    
+    Write-Host "`n - WebConfig : "$WebConfig"`n - ConfigurationType : "$ConfigurationType"`n - outputPath : "$outputPath"`n - vsVersion : "$vsVersion"`n"
     
 
     
@@ -44,7 +35,7 @@ try{
     }
 
     Write-Host "Parsing $webConfig to xmlObject..."
-    $myXml = CreateXmlTransformableObjectFromXmlFile -xmlFile $webConfig
+    $myXml = CreateXmlTransformableObjectFromXmlFile -xmlFile $webConfig  -vsVersion $vsVersion
     
     Write-Host "Getting the list of configuration File listed in $webConfig..."
     $sourcesList = GetListConfigFileToTransform -anXml $myXml
@@ -65,7 +56,7 @@ try{
             
             if(ResolvePath -thePath $xdtPath){
               
-                XmlDocTransform -xml $fullConfigPath -xdt $xdtPath -output "$outputPath$name.config" -vsVersion $VSVersion
+                XmlDocTransform -xml $fullConfigPath -xdt $xdtPath -output "$outputPath$name.config" -vsVersion $vsVersion
                 
                 $innerXml = get-Content "$outputPath$name.config"
                  foreach ($line in $innerXml){
@@ -83,5 +74,5 @@ try{
         }
     }
 }finally {
-    Trace-VstsLeavingInvocation $MyInvocation
+    
 }
