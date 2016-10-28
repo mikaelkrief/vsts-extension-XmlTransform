@@ -66,12 +66,12 @@ function ResolvePath($thePath)
     
 }
 
-function ConvertConfigPathToXdtPath($myConfigPath)
+function ConvertConfigPathToXdtPath($myConfigPath, $configurationType)
 {
     
     if($myConfigPath -match "(.*\.)")
     {
-    $fullConfigDirectory = $matches[1]
+        $fullConfigDirectory = $matches[1]
     }
     else
     {
@@ -79,4 +79,22 @@ function ConvertConfigPathToXdtPath($myConfigPath)
     }
     
     return "$fullConfigDirectory$configurationType.config" 
+}
+
+
+function DeleteConfig($ouputConfigPath, $configurationType)
+{
+    
+    if($ouputConfigPath -match "(.*\.)")
+    {
+        $outputConfigDirectory = $matches[1]
+    }
+    else
+    {
+        Throw "Path cannot be resolved in "+$ouputConfigPath  
+    }
+    
+    $fileToDelete = "$outputConfigDirectory$configurationType.config" 
+    Write-Host "Delete file : "$fileToDelete
+    Remove-Item -Path $fileToDelete -Force
 }

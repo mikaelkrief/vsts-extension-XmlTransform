@@ -2,4 +2,6 @@
 
 ## Task MultipleConfigurationFileTransformer ##
 
-This Task transforme multiples xml configuration files
+This Task transforme multiples configuration files included in web ou app config file.
+
+@shoot@

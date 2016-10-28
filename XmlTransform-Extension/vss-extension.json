@@ -1,10 +1,10 @@
 {
   "manifestVersion": 1,
   "id": "ConfigurationFileTransformer",
-  "version": "0.1.10",
+  "version": "0.1.35",
   "name": "Configuration Files Transformer",
   "scopes": [],
-  "description": "Transforme XML Configurations and files",
+  "description": "Transforme XML Configurations and XML files",
   "publisher": "DevMikaelKrief",
   "public": false,
   "icons": {

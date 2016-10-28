@@ -1,29 +1,38 @@
-[CmdletBinding(DefaultParameterSetName='None')]
+
 param
 (
     [string][Parameter(Mandatory=$true)]$webConfigRelativePath,
     [string][Parameter(Mandatory=$true)]$outPutRelativePath,
-    [string][Parameter(Mandatory=$true)]$vsVersion
+    [string][Parameter(Mandatory=$true)]$vsVersion,
+    [string][Parameter(Mandatory=$true)]$cleanOutput
+
 )
 
 
-
-try{
-
     . "$PSScriptRoot\Helpers.ps1"
 
-    # These variables are provided by TFS
 
     $buildConfiguration = $Env:BUILDCONFIGURATION
     
-    Write-Host "Inputs are the following : "
+    $b_clean = [boolean]$cleanOutput
+    Write-Verbose "b_clean : $b_clean"
+
+    if($buildConfiguration -eq " "){
+        $buildConfiguration ="release"
+    }
+    
+    #Write-Host "Inputs are the following : "
     $webConfig = $webConfigRelativePath
     $configurationType = $buildConfiguration
     $outputPath = $outPutRelativePath
     
-    Write-Host "`n - WebConfig : "$WebConfig"`n - ConfigurationType : "$ConfigurationType"`n - outputPath : "$outputPath"`n - vsVersion : "$vsVersion"`n"
+    #Write-Host "`n - WebConfig : "$WebConfig"`n - ConfigurationType : "$ConfigurationType"`n - outputPath : "$outputPath"`n - vsVersion : "$vsVersion"`n"
     
-
+    Write-Verbose "Parameter Values"
+    foreach($key in $PSBoundParameters.Keys)
+    {
+        Write-Verbose ($key + ' = ' + $PSBoundParameters[$key])
+    }
     
     if($webconfig -match "(.*)\\")
     {
@@ -49,7 +58,7 @@ try{
         {
             $name = GetXmlNameByPath -path $source.configSource; 
             $fullConfigPath = $buildDirectory+"\"+$source.configSource;
-            $xdtPath = ConvertConfigPathToXdtPath -myConfigPath $fullConfigPath
+            $xdtPath = ConvertConfigPathToXdtPath -myConfigPath $fullConfigPath -configurationType $configurationType
             
             Write-Host "`n================ "$name" ================`n"   
             write-Host "`nchecking if xdt file for $name exists..."
@@ -62,6 +71,10 @@ try{
                  foreach ($line in $innerXml){
                      Write-Host $line
                  }
+
+                if($b_clean){
+                   DeleteConfig -configurationType $configurationType -ouputConfigPath "$outputPath$name.config"
+                }
                 
                 
                 Write-Host "`n============= process finished for"$name"config file =============`n"
@@ -73,6 +86,3 @@ try{
              
         }
     }
-}finally {
-    
-}
