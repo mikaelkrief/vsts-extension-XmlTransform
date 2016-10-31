@@ -1,10 +1,10 @@
 {
-  "id": "c7237c10-23f5-11e6-8551-db7351d42238",
-  "name": "Multiple Configuration File Transformer",
-  "friendlyName": "Tranform configuration files",
-  "description": "Transform multiple configuration files include in web/app.config",
+  "id": "5a0669b1-c0ed-439d-80bf-88457e85a95c",
+  "name": "External Configuration File Transformer",
+  "friendlyName": "Tranform externals configuration files",
+  "description": "Transform externals configuration files included in web/app.config",
   "author": "Mikael Krief",
-  "helpMarkDown": "v 0.1.33 [More Information](https://github.com/mikaelkrief/vsts-extension-XmlTransform)",
+  "helpMarkDown": "v 1.0.0 [More Information](https://github.com/mikaelkrief/vsts-extension-XmlTransform)",
   "category": "Utility",
   "visibility": [
     "Build",
@@ -14,12 +14,12 @@
     "visualstudio"
   ],
   "version": {
-    "Major": "0",
-    "Minor": "1",
-    "Patch": "33"
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
   },
   "minimumAgentVersion": "1.95.0",
-  "instanceNameFormat": "Multiple Config File Transform $(message)",
+  "instanceNameFormat": "External Configuration File Transform $(message)",
   "inputs": [
     {
       "name": "webConfigRelativePath",
@@ -35,14 +35,14 @@
       "label": "Transformed Output Path",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Relative Output Path for transformed configuration(s) file(s) Example : $(build.BinariesDirectory)\\MyApp\\Configuration\\"
+      "helpMarkDown": "Output Path for transformed configuration(s) file(s) Example : $(build.BinariesDirectory)\\MyApp\\Configuration\\"
     },
     {
       "name": "vsVersion",
       "type": "pickList",
       "label": "Visual Studio Version",
       "required": false,
-      "helpMarkDown": "Visual Studio Version.",
+      "helpMarkDown": "Visual Studio Version",
       "defaultValue": "14.0",
       "options": {
         "14.0": "Visual Studio 2015",
@@ -56,7 +56,7 @@
       "label": "Clean output",
       "required": true,
       "defaultValue": "false",
-      "helpMarkDown": "Delete xdt files in ouput directory like appSettings.release.config"
+      "helpMarkDown": "Delete xdt files in ouput directory Example : appSettings.release.config"
     }
   ],
   "execution": {

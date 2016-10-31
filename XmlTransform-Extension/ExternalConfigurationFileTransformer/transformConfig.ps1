@@ -13,21 +13,16 @@ param
 
 
     $buildConfiguration = $Env:BUILDCONFIGURATION
-    
-    $b_clean = [boolean]$cleanOutput
-    Write-Verbose "b_clean : $b_clean"
 
     if($buildConfiguration -eq " "){
         $buildConfiguration ="release"
     }
-    
-    #Write-Host "Inputs are the following : "
+
     $webConfig = $webConfigRelativePath
     $configurationType = $buildConfiguration
     $outputPath = $outPutRelativePath
     
-    #Write-Host "`n - WebConfig : "$WebConfig"`n - ConfigurationType : "$ConfigurationType"`n - outputPath : "$outputPath"`n - vsVersion : "$vsVersion"`n"
-    
+ 
     Write-Verbose "Parameter Values"
     foreach($key in $PSBoundParameters.Keys)
     {
@@ -43,13 +38,12 @@ param
         throw "Build directory cannot be resolved in"+$webConfig
     }
 
-    Write-Host "Parsing $webConfig to xmlObject..."
+    Write-Verbose "Parsing $webConfig to xmlObject..."
     $myXml = CreateXmlTransformableObjectFromXmlFile -xmlFile $webConfig  -vsVersion $vsVersion
     
     Write-Host "Getting the list of configuration File listed in $webConfig..."
     $sourcesList = GetListConfigFileToTransform -anXml $myXml
-    #Add source file if transform origin is checked
-   
+
     $sourcesList  | Foreach-Object{Write-Host "- "$_ }
 
     foreach  ($source in $sourcesList)
@@ -60,8 +54,8 @@ param
             $fullConfigPath = $buildDirectory+"\"+$source.configSource;
             $xdtPath = ConvertConfigPathToXdtPath -myConfigPath $fullConfigPath -configurationType $configurationType
             
-            Write-Host "`n================ "$name" ================`n"   
-            write-Host "`nchecking if xdt file for $name exists..."
+            Write-Host "Process started for external configuration file $name"   
+            Write-Verbose "Checking if xdt file for $name exists..."
             
             if(ResolvePath -thePath $xdtPath){
               
@@ -69,15 +63,15 @@ param
                 
                 $innerXml = get-Content "$outputPath$name.config"
                  foreach ($line in $innerXml){
-                     Write-Host $line
+                     Write-Verbose $line
                  }
 
-                if($b_clean){
-                   DeleteConfig -configurationType $configurationType -ouputConfigPath "$outputPath$name.config"
+                if($cleanOutput  -eq $true){
+                    DeleteConfig -configurationType $configurationType -ouputConfigPath "$outputPath$name.config"
                 }
                 
                 
-                Write-Host "`n============= process finished for"$name"config file =============`n"
+                Write-Host "Process finished for "$name" config file"
             }
             else
             {

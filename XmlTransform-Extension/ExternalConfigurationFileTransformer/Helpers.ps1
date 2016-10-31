@@ -1,7 +1,7 @@
 function CreateXmlTransformableObjectFromXmlFile($xmlFile, $vsVersion)
 {
     $dllPath = "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v"+$vsVersion+"\Web\Microsoft.Web.XmlTransform.dll"
-    Write-Host "dllPath : $dllPath"
+    Write-Verbose "dllPath for Microsoft.Web.XmlTransform.dll : $dllPath"
     Add-Type -LiteralPath $dllPath
     $xmlobj = New-Object Microsoft.Web.XmlTransform.XmlTransformableDocument;
     $xmlobj.PreserveWhitespace = $true;
@@ -18,7 +18,6 @@ function XmlDocTransform($xml, $xdt, $output, $vsVersion)
         throw "File not found ! $xdt";
     }
 
-    Write-Host "vsVersion : $vsVersion"
     $config = CreateXmlTransformableObjectFromXmlFile -xmlFile $xml  -vsVersion $vsVersion
     $transf = New-Object Microsoft.Web.XmlTransform.XmlTransformation($xdt);
     

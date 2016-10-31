@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "ConfigurationFileTransformer",
-  "version": "0.1.35",
+  "version": "0.1.51",
   "name": "Configuration Files Transformer",
   "scopes": [],
   "description": "Transforme XML Configurations and XML files",
@@ -25,7 +25,7 @@
   },
   "files": [
     {
-      "path": "MultipleConfigurationFileTransformer"
+      "path": "ExternalConfigurationFileTransformer"
     }
   ],
   "categories": [
@@ -33,13 +33,13 @@
   ],
   "contributions": [
     {
-      "id": "MultipleConfigurationFileTransformer",
+      "id": "ExternalConfigurationFileTransformer",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "type": "ms.vss-distributed-task.task",
       "properties": {
-        "name": "MultipleConfigurationFileTransformer"
+        "name": "ExternalConfigurationFileTransformer"
       }
     }
     

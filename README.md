@@ -1,7 +1,7 @@
 # vsts-extension-XmlTransform
 
-## Task MultipleConfigurationFileTransformer ##
+## Task ExternalConfigurationFileTransformer ##
 
-This Task transforme multiples configuration files included in web ou app config file.
+This Task transforme externals configuration files included in web ou app config file.
 
 @shoot@
